@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Acknowledge from './Acknowledge';
 
 function Formfield() {
 
@@ -41,7 +42,7 @@ function Formfield() {
                 <Input> <input type="text" placeholder="Aadhar No." /></Input>
 
                 <div className="btn">
-                    <Button>SUBMIT</Button>
+                    <Button onClick={Acknowledge} type="submit">SUBMIT</Button>
                 </div>
 
             </div>
