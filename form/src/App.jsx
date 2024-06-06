@@ -34,7 +34,7 @@ padding:20px;
 }
 `
 const Container = styled.div`
-width: calc(50vw + 500px);
+width: calc(50vw + 50px);
 background-color: #e8e5e5;
 margin-top: 20px;
 
