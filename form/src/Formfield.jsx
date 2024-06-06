@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Acknowledge from './Acknowledge';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Formfield() {
 
@@ -15,11 +16,17 @@ function Formfield() {
         city: '',
         panNo: '',
         aadharNo: ''
-    
-      });
+    });
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
     const validate = () => {
         let formErrors = {};
-    
+
         if (!formData.firstName) formErrors.firstName = 'First Name is required';
         if (!formData.lastName) formErrors.lastName = 'Last Name is required';
         if (!formData.username) formErrors.username = 'Username is required';
@@ -30,37 +37,37 @@ function Formfield() {
         if (!formData.city) formErrors.city = 'City is required';
         if (!formData.panNo) formErrors.panNo = 'PAN Number is required';
         if (!formData.aadharNo) formErrors.aadharNo = 'Aadhar Number is required';
-    
+
         setErrors(formErrors);
-    
+
         return Object.keys(formErrors).length === 0;
     };
     const handleSubmit = (e) => {
-      e.preventDefault();
-      if (validate()) {
-        history.push('/success', formData);
-      }
+        e.preventDefault();
+        if (validate()) {
+            history.push('/success', formData);
+        }
     };
-        
+
 
     return (
-        <Form>
+        <Form onSubmit={handleSubmit}>
             <div>
                 <InputWrapper>
-                    <Input> <input type="text" placeholder="First Name" /></Input>
-                    <Input> <input type="text" placeholder="Last Name" /></Input>
+                    <Input> <input type="text" placeholder="First Name" value={formData.firstName} onChange={handleChange} /></Input>
+                    <Input> <input type="text" placeholder="Last Name" value={formData.lastName} onChange={handleChange} /></Input>
                 </InputWrapper>
-                <Input> <input type="text" placeholder="Username" /></Input>
+                <Input> <input type="text" placeholder="Username" value={formData.username} onChange={handleChange} /></Input>
 
                 <InputWrapper>
-                    <Input> <input type="email" placeholder="Email Address" /></Input>
-                    <Input> <input type="password" placeholder="Password" /></Input>
+                    <Input> <input type="email" placeholder="Email Address" value={formData.email} onChange={handleChange} /></Input>
+                    <Input> <input type="password" placeholder="Password" value={formData.password} onChange={handleChange} /></Input>
                 </InputWrapper>
 
                 <InputWrapper>
                     <div className="countryCode">
                         <Input>
-                            <select name="country" id="">
+                            <select name="country" value={formData.country} onChange={handleChange}>
                                 <option value="">Select Country</option>
                                 <option value="India">India</option>
                                 <option value="USA">USA</option>
@@ -68,7 +75,7 @@ function Formfield() {
                             </select>
                         </Input>
                         <Input>
-                            <select name="city">
+                            <select name="city" value={formData.city} onChange={handleChange}>
                                 <option value="">Select City</option>
                                 <option value="Mumbai">Mumbai</option>
                                 <option value="New York">New York</option>
@@ -76,15 +83,15 @@ function Formfield() {
                             </select>
                         </Input>
                     </div>
-                    <Input><input type="text" placeholder="PhoneNo." /></Input>
+                    <Input><input type="text" placeholder="PhoneNo." value={formData.phoneNo} onChange={handleChange} /></Input>
                 </InputWrapper>
-                <Input> <input type="text" placeholder="PAN No." /></Input>
-                <Input> <input type="text" placeholder="Aadhar No." /></Input>
+                <Input> <input type="text" placeholder="PAN No." value={formData.panNo} onChange={handleChange} /></Input>
+                <Input> <input type="text" placeholder="Aadhar No." value={formData.aadharNo} onChange={handleChange} /></Input>
 
             </div>
             <div className="btn">
-                    <Button type="submit" disabled={!validate()}>SUBMIT</Button>
-                </div>
+                <Button type="submit" disabled={!validate()}>SUBMIT</Button>
+            </div>
         </Form>
     )
 
