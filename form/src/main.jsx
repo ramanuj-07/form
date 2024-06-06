@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { createGlobalStyle } from 'styled-components'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Acknowledge from './Acknowledge.jsx';
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -17,7 +19,12 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <GlobalStyle/>
-      <App />
+    <Router>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/success" element={<Acknowledge />} />
+      </Routes>
+    </Router>
   </React.StrictMode>,
 )
 
