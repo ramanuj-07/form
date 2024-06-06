@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Acknowledge from './Acknowledge';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -45,7 +44,7 @@ function Formfield() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            history.push('/success', formData);
+            navigate.push('/success', formData);
         }
     };
 
@@ -54,7 +53,8 @@ function Formfield() {
         <Form onSubmit={handleSubmit}>
             <div>
                 <InputWrapper>
-                    <Input> <input type="text" placeholder="First Name" value={formData.firstName} onChange={handleChange} /></Input>
+                    <Input> <input type="text" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
+                        {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}</Input>
                     <Input> <input type="text" placeholder="Last Name" value={formData.lastName} onChange={handleChange} /></Input>
                 </InputWrapper>
                 <Input> <input type="text" placeholder="Username" value={formData.username} onChange={handleChange} /></Input>
@@ -97,6 +97,12 @@ function Formfield() {
 
 }
 export default Formfield;
+
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+`;
 
 const Form = styled.form`
 display:flex;
