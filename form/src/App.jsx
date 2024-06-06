@@ -1,10 +1,7 @@
 import styled from 'styled-components'
 import Formfield from './Formfield';
-import { useState } from 'react';
 
 function App() {
-
-
 
   return (
     <MainSignUpPage>
@@ -13,7 +10,7 @@ function App() {
       </div>
       <div>
         <Container>
-        <Formfield></Formfield>
+          <Formfield></Formfield>
         </Container>
       </div>
 
@@ -39,3 +36,4 @@ background-color: #e8e5e5;
 margin-top: 20px;
 
 `
+

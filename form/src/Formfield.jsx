@@ -1,11 +1,51 @@
 import styled from "styled-components";
 import Acknowledge from './Acknowledge';
+import { useState } from 'react';
 
 function Formfield() {
 
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        username: '',
+        email: '',
+        password: '',
+        phoneNo: '',
+        country: '',
+        city: '',
+        panNo: '',
+        aadharNo: ''
+    
+      });
+    const validate = () => {
+        let formErrors = {};
+    
+        if (!formData.firstName) formErrors.firstName = 'First Name is required';
+        if (!formData.lastName) formErrors.lastName = 'Last Name is required';
+        if (!formData.username) formErrors.username = 'Username is required';
+        if (!formData.email) formErrors.email = 'Email is required';
+        if (!formData.password) formErrors.password = 'Password is required';
+        if (!formData.phoneNo) formErrors.phoneNo = 'Phone Number is required';
+        if (!formData.country) formErrors.country = 'Country is required';
+        if (!formData.city) formErrors.city = 'City is required';
+        if (!formData.panNo) formErrors.panNo = 'PAN Number is required';
+        if (!formData.aadharNo) formErrors.aadharNo = 'Aadhar Number is required';
+    
+        setErrors(formErrors);
+    
+        return Object.keys(formErrors).length === 0;
+    };
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      if (validate()) {
+        history.push('/success', formData);
+      }
+    };
+        
+
     return (
         <Form>
-            <div className="nameField">
+            <div>
                 <InputWrapper>
                     <Input> <input type="text" placeholder="First Name" /></Input>
                     <Input> <input type="text" placeholder="Last Name" /></Input>
@@ -41,11 +81,10 @@ function Formfield() {
                 <Input> <input type="text" placeholder="PAN No." /></Input>
                 <Input> <input type="text" placeholder="Aadhar No." /></Input>
 
-                <div className="btn">
-                    <Button onClick={Acknowledge} type="submit">SUBMIT</Button>
-                </div>
-
             </div>
+            <div className="btn">
+                    <Button type="submit" disabled={!validate()}>SUBMIT</Button>
+                </div>
         </Form>
     )
 
