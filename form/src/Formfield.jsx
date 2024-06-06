@@ -39,6 +39,7 @@ function Formfield() {
             <Input>
                 <input type="text" placeholder="Enter Aadhar no." />
             </Input>
+            <Button> Submit</Button>
         </Form>
     )
 
@@ -46,10 +47,26 @@ function Formfield() {
 export default Formfield;
 
 const Form = styled.form`
-
+display:flex;
+align-items:center;
+flex-direction:column;
+`
+const Button = styled.button`
+display:flex;
+align-items:center;
+        background-color:black;
+        color:white;
+        border-radius: 5px;
+        padding:10px 10px;
+        width:150px;
+        cursor: pointer;
+        border:none;
+        &:hover{
+            background-color: #4c4c4c;
+        }
+    
 `
 const InputWrapper = styled.div`
-  background-color: grey;
   display: flex;
   justify-content: center;
   gap: 30px; 
@@ -57,7 +74,6 @@ const InputWrapper = styled.div`
 `;
 
 const Input = styled.form`
-  background-color:grey;
   padding:25px;
   display: flex;
   justify-content:center;
