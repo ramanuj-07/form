@@ -17,6 +17,7 @@ function Formfield() {
         aadharNo: ''
     });
     const [errors, setErrors] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -44,9 +45,13 @@ function Formfield() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            navigate.push('/success', formData);
+            navigate('/success', { state: { formData } });
         }
     };
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
 
 
     return (
@@ -55,13 +60,20 @@ function Formfield() {
                 <InputWrapper>
                     <Input> <input type="text" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
                         {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}</Input>
-                    <Input> <input type="text" placeholder="Last Name" value={formData.lastName} onChange={handleChange} /></Input>
+                    <Input> <input type="text" placeholder="Last Name" value={formData.lastName} onChange={handleChange} />
+                        {errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage>}</Input>
                 </InputWrapper>
-                <Input> <input type="text" placeholder="Username" value={formData.username} onChange={handleChange} /></Input>
+
+                <Input> <input type="text" placeholder="Username" value={formData.username} onChange={handleChange} />
+                    {errors.username && <ErrorMessage>{errors.username}</ErrorMessage>}</Input>
 
                 <InputWrapper>
-                    <Input> <input type="email" placeholder="Email Address" value={formData.email} onChange={handleChange} /></Input>
-                    <Input> <input type="password" placeholder="Password" value={formData.password} onChange={handleChange} /></Input>
+                    <Input> <input type="email" placeholder="Email Address" value={formData.email} onChange={handleChange} />
+                        {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+                    </Input>
+                    <Input> <input type="password" placeholder="Password" value={formData.password} onChange={handleChange} />
+                        {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+                    </Input>
                 </InputWrapper>
 
                 <InputWrapper>
@@ -72,7 +84,7 @@ function Formfield() {
                                 <option value="India">India</option>
                                 <option value="USA">USA</option>
                                 <option value="UK">UK</option>
-                            </select>
+                            </select>{errors.country && <ErrorMessage>{errors.country}</ErrorMessage>}
                         </Input>
                         <Input>
                             <select name="city" value={formData.city} onChange={handleChange}>
@@ -80,13 +92,18 @@ function Formfield() {
                                 <option value="Mumbai">Mumbai</option>
                                 <option value="New York">New York</option>
                                 <option value="London">London</option>
-                            </select>
+                            </select>{errors.city && <ErrorMessage>{errors.city}</ErrorMessage>}
                         </Input>
                     </div>
-                    <Input><input type="text" placeholder="PhoneNo." value={formData.phoneNo} onChange={handleChange} /></Input>
+                    <Input><input type="text" placeholder="PhoneNo." value={formData.phoneNo} onChange={handleChange} />
+                        {errors.phoneNo && <ErrorMessage>{errors.phoneNo}</ErrorMessage>}</Input>
+
                 </InputWrapper>
-                <Input> <input type="text" placeholder="PAN No." value={formData.panNo} onChange={handleChange} /></Input>
-                <Input> <input type="text" placeholder="Aadhar No." value={formData.aadharNo} onChange={handleChange} /></Input>
+                <Input> <input type="text" placeholder="PAN No." value={formData.panNo} onChange={handleChange} />
+                    {errors.panNo && <ErrorMessage>{errors.panNo}</ErrorMessage>}
+                </Input>
+                <Input> <input type="text" placeholder="Aadhar No." value={formData.aadharNo} onChange={handleChange} />
+                    {errors.aadharNo && <ErrorMessage>{errors.aadharNo}</ErrorMessage>}</Input>
 
             </div>
             <div className="btn">
