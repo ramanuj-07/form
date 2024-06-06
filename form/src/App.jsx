@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 function App() {
 
+
+
   return (
     <MainSignUpPage>
       <div className='signUp'>
@@ -32,8 +34,7 @@ padding:20px;
 }
 `
 const Container = styled.div`
-width:500px;
-height: 600px;
+width: calc(50vw + 500px);
 background-color: #e8e5e5;
 margin-top: 20px;
 
