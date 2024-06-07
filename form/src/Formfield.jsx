@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Validate from "./Validate";
 
@@ -24,7 +24,39 @@ function Formfield() {
     const [cities, setCities] = useState([]);
     const [countryCode, setCountryCode] = useState('');
 
-    
+    useEffect(() => {
+        fetch('https://restcountries.com/v3.1/all')
+            .then(response => response.json())
+            .then(data => {
+                const countryList = data.map(country => ({
+                    name: country.name.common,
+                    code: country.cca2,
+                    phoneCode: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : '')
+                }));
+                countryList.sort((a, b) => a.name.localeCompare(b.name));
+                setCountries(countryList);
+            });
+    }, []);
+
+    useEffect(() => {
+        if (formData.country) {
+            // Fetch cities based on selected country
+            fetch(`https://api.geonames.org/searchJSON?country=${formData.country}&featureClass=P&maxRows=1000&username=ramanuj.kiit`)
+                .then(response => response.json())
+                .then(data => {
+                    const cityList = data.geonames.map(city => city.name);
+                    setCities(cityList);
+                });
+
+            // Fetch country code based on selected country
+            const selectedCountry = countries.find(country => country.name === formData.country);
+            if (selectedCountry) {
+                setCountryCode(selectedCountry.phoneCode);
+            }
+        }
+    }, [formData.country, countries]);
+ 
+
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,7 +64,7 @@ function Formfield() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formErrors = Validate(formData,setErrors);  // Call the Validate function
+        const formErrors = Validate(formData, setErrors);  // Call the Validate function
         setErrors(formErrors);
 
         if (Object.keys(formErrors).length === 0) {
@@ -73,23 +105,25 @@ function Formfield() {
                         <Input>
                             <select name="country" value={formData.country} onChange={handleChange}>
                                 <option value="">Select Country</option>
-                                <option value="India">India</option>
-                                <option value="USA">USA</option>
-                                <option value="UK">UK</option>
-                            </select>{errors.country && <ErrorMessage>{errors.country}</ErrorMessage>}
+                                {countries.map(country => (
+                                    <option value={country.name} key={country.code}>{country.name}</option>
+                                ))}
+                            </select>
+                            {errors.country && <ErrorMessage>{errors.country}</ErrorMessage>}
                         </Input>
                         <Input>
                             <select name="city" value={formData.city} onChange={handleChange}>
                                 <option value="">Select City</option>
-                                <option value="Mumbai">Mumbai</option>
-                                <option value="New York">New York</option>
-                                <option value="London">London</option>
-                            </select>{errors.city && <ErrorMessage>{errors.city}</ErrorMessage>}
+                                {cities.map((city, index) => (
+                                    <option key={index} value={city}>{city}</option>
+                                ))}
+                            </select>
+                            {errors.city && <ErrorMessage>{errors.city}</ErrorMessage>}
                         </Input>
                     </div>
                     <Input>
                         <div>
-                        {/* <span>{countryCode}</span> */}
+                        <span>{countryCode}</span>
                             <input type="text" placeholder="PhoneNo." name="phoneNo" value={formData.phoneNo} onChange={handleChange} />
                         </div>
                         {errors.phoneNo && <ErrorMessage>{errors.phoneNo}</ErrorMessage>}
