@@ -31,7 +31,13 @@ function Formfield() {
         if (!formData.lastName) formErrors.lastName = 'Last Name is required';
         if (!formData.username) formErrors.username = 'Username is required';
         if (!formData.email) formErrors.email = 'Email is required';
-        if (!formData.password) formErrors.password = 'Password is required';
+
+        if (!formData.password) 
+            formErrors.password = 'Password is required';
+        else if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(formData.password)) {
+            formErrors.password = 'Password must contain at least 8 characters, including letters and numbers';
+            }
+           
         if (!formData.phoneNo) formErrors.phoneNo = 'Phone Number is required';
         if (!formData.country) formErrors.country = 'Country is required';
         if (!formData.city) formErrors.city = 'City is required';
@@ -49,7 +55,8 @@ function Formfield() {
         }
     };
 
-    const toggleShowPassword = () => {
+    const toggleShowPassword = (e) => {
+        e.preventDefault();
         setShowPassword(!showPassword);
     };
 
@@ -72,7 +79,8 @@ function Formfield() {
                     <Input> <input type="email" placeholder="Email Address" name="email" value={formData.email} onChange={handleChange} />
                         {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
                     </Input>
-                    <Input> <input type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
+                    <Input> <input type={showPassword ? "text" : "password"} placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
+                        <TogglePasswordBtn onClick={toggleShowPassword}>{showPassword ? "Hide" : "show"}</TogglePasswordBtn>
                         {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
                     </Input>
                 </InputWrapper>
@@ -100,11 +108,12 @@ function Formfield() {
                         {errors.phoneNo && <ErrorMessage>{errors.phoneNo}</ErrorMessage>}</Input>
 
                 </InputWrapper>
+
                 <Input> <input type="text" placeholder="PAN No." name="panNo" value={formData.panNo} onChange={handleChange} />
                     {errors.panNo && <ErrorMessage>{errors.panNo}</ErrorMessage>}
                 </Input>
                 <Input> <input type="text" placeholder="Aadhar No." name="aadharNo" value={formData.aadharNo} onChange={handleChange} />
-                {errors.aadharNo && <ErrorMessage>{errors.aadharNo}</ErrorMessage>}</Input>
+                    {errors.aadharNo && <ErrorMessage>{errors.aadharNo}</ErrorMessage>}</Input>
 
             </div>
             <div className="btn">
@@ -176,3 +185,11 @@ const Input = styled.form`
   }
 
 `
+const TogglePasswordBtn = styled.button`
+  margin-left: 10px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+`;
