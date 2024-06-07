@@ -21,7 +21,7 @@ function Formfield() {
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const [countries, setCountries] = useState([]);
+    const [countries] = useState(Data);
     const [cities, setCities] = useState([]);
     const [countryCode, setCountryCode] = useState('');
 
