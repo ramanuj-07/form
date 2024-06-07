@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/success" element={<Acknowledge />} />
+        <Route path="/acknowledge" element={<Acknowledge />} />
       </Routes>
     </Router>
   </React.StrictMode>,

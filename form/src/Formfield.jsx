@@ -46,7 +46,7 @@ function Formfield() {
         setErrors(formErrors);
 
         if (Object.keys(formErrors).length === 0) {
-            navigate('/success', { state: { formData } });
+            navigate('/acknowledge', { state: { formData } });
         }
     };
 
