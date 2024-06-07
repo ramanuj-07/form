@@ -20,21 +20,19 @@ function Formfield() {
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const [countries, setCountries] = useState([]);
+    const [cities, setCities] = useState([]);
+    const [countryCode, setCountryCode] = useState('');
+
+    
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     if (Validate(formData, setErrors)) {
-    //         navigate('/success', { state: { formData } });
-    //     }
-    // };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formErrors = Validate(formData,setErrors);  // Call the validation function
+        const formErrors = Validate(formData,setErrors);  // Call the Validate function
         setErrors(formErrors);
 
         if (Object.keys(formErrors).length === 0) {
@@ -89,8 +87,13 @@ function Formfield() {
                             </select>{errors.city && <ErrorMessage>{errors.city}</ErrorMessage>}
                         </Input>
                     </div>
-                    <Input><input type="text" placeholder="PhoneNo." name="phoneNo" value={formData.phoneNo} onChange={handleChange} />
-                        {errors.phoneNo && <ErrorMessage>{errors.phoneNo}</ErrorMessage>}</Input>
+                    <Input>
+                        <div>
+                        {/* <span>{countryCode}</span> */}
+                            <input type="text" placeholder="PhoneNo." name="phoneNo" value={formData.phoneNo} onChange={handleChange} />
+                        </div>
+                        {errors.phoneNo && <ErrorMessage>{errors.phoneNo}</ErrorMessage>}
+                    </Input>
 
                 </InputWrapper>
 
