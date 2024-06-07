@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Validate from "./Validate";
 
 function Formfield() {
 
@@ -26,17 +27,25 @@ function Formfield() {
 
     // const handleSubmit = (e) => {
     //     e.preventDefault();
-    //     if (validate()) {
+    //     if (Validate(formData, setErrors)) {
     //         navigate('/success', { state: { formData } });
     //     }
     // };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const formErrors = Validate(formData,setErrors);  // Call the validation function
+        setErrors(formErrors);
+
+        if (Object.keys(formErrors).length === 0) {
+            navigate('/success', { state: { formData } });
+        }
+    };
 
     const toggleShowPassword = (e) => {
         e.preventDefault();
         setShowPassword(!showPassword);
     };
-
-
 
     return (
         <Form onSubmit={handleSubmit}>

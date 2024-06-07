@@ -1,6 +1,4 @@
-import React from 'react'
-
-function Validate() {
+const Validate=(formData,setErrors) => {
 
     let formErrors = {};
 
@@ -30,7 +28,8 @@ function Validate() {
 
     setErrors(formErrors);
 
-    return Object.keys(formErrors).length === 0;  
+    // return Object.keys(formErrors).length === 0; 
+    return formErrors;
 }
 
 export default Validate;
