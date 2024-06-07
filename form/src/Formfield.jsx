@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Validate from "./Validate";
+import Data from "./Data";
 
 function Formfield() {
 
@@ -25,38 +26,15 @@ function Formfield() {
     const [countryCode, setCountryCode] = useState('');
 
     useEffect(() => {
-        fetch('https://restcountries.com/v3.1/all')
-            .then(response => response.json())
-            .then(data => {
-                const countryList = data.map(country => ({
-                    name: country.name.common,
-                    code: country.cca2,
-                    phoneCode: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : '')
-                }));
-                countryList.sort((a, b) => a.name.localeCompare(b.name));
-                setCountries(countryList);
-            });
-    }, []);
-
-    useEffect(() => {
         if (formData.country) {
-            // Fetch cities based on selected country
-            fetch(`https://api.geonames.org/searchJSON?country=${formData.country}&featureClass=P&maxRows=1000&username=ramanuj.kiit`)
-                .then(response => response.json())
-                .then(data => {
-                    const cityList = data.geonames.map(city => city.name);
-                    setCities(cityList);
-                });
-
-            // Fetch country code based on selected country
             const selectedCountry = countries.find(country => country.name === formData.country);
             if (selectedCountry) {
                 setCountryCode(selectedCountry.phoneCode);
+                setCities(selectedCountry.cities);
+                setFormData({ ...formData, city: '' }); // Reset city when country changes
             }
         }
     }, [formData.country, countries]);
- 
-
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
